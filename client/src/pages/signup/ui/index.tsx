@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-import { SigninForm } from "@/features/auth";
+import { SignupForm } from "@/features/auth";
 import {
   Card,
   CardContent,
@@ -10,23 +10,25 @@ import {
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
 
-export const Signin = () => {
+export const Signup = () => {
   return (
     <Card className="border-none shadow-none">
       <CardHeader>
-        <CardTitle>Signin</CardTitle>
+        <CardTitle>Signup</CardTitle>
 
-        <CardDescription>Enter your credentials to sign in</CardDescription>
+        <CardDescription>Enter your credentials to sign up</CardDescription>
       </CardHeader>
 
       <CardContent>
-        <SigninForm />
+        <SignupForm />
       </CardContent>
 
       <CardFooter>
         <p className="mx-auto">
-          <span className="text-muted-foreground">Don’t have an account?</span>{" "}
-          <Link to="/auth/signup">Sign up</Link>
+          <span className="text-muted-foreground">
+            Already have an account?
+          </span>{" "}
+          <Link to="/auth/signin">Sign in</Link>
         </p>
       </CardFooter>
     </Card>

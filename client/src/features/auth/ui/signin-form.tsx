@@ -1,12 +1,13 @@
-import { LoginVariants } from "./login-variants";
+import { SiGoogle, SiFacebook } from "@icons-pack/react-simple-icons";
+
 import { Button } from "@/shared/shadcn/components/ui/button";
 import {
   Field,
   FieldGroup,
   FieldLabel,
+  FieldSeparator,
 } from "@/shared/shadcn/components/ui/field";
 import { Input } from "@/shared/shadcn/components/ui/input";
-import { Separator } from "@/shared/shadcn/components/ui/separator";
 
 export const SigninForm = () => {
   return (
@@ -28,10 +29,16 @@ export const SigninForm = () => {
           <Button type="submit">Login</Button>
         </Field>
 
-        <Separator />
+        <FieldSeparator>or continue with</FieldSeparator>
 
         <Field>
-          <LoginVariants />
+          <Button type="button" variant="outline">
+            <SiGoogle /> Login with Google
+          </Button>
+
+          <Button type="button" variant="outline">
+            <SiFacebook /> Login with Facebook
+          </Button>
         </Field>
       </FieldGroup>
     </form>
