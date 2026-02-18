@@ -1,0 +1,4 @@
+export const DATABASE_ERRORS = {
+  UNIQUE_VIOLATION: "P2002",
+  // CHECK_VIOLATION: "23514",
+};

@@ -15,13 +15,17 @@ const options: StrategyOptionsWithoutRequest = {
 
 export const jwtStrategy = new Strategy(options, async (payload, done) => {
   try {
-    const id = Number(payload.id);
+    const { id } = payload;
 
-    if (typeof payload.id !== "number") {
-      return done(null, null);
+    if (!id) {
+      return done(null, false);
     }
 
-    const user = await prisma.user.findUnique({ where: { id } });
+    const user = await prisma.user.findUnique({ where: { id: payload.id } });
+
+    if (!user) {
+      return done(null, false);
+    }
 
     return done(null, user);
   } catch (error) {
