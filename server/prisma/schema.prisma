@@ -9,16 +9,72 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
-  password String?
-  accounts Account[]
+enum Role {
+  USER
+  ADMIN
 }
 
-model Account {
-  id       Int    @id @default(autoincrement())
-  user     User   @relation(fields: [userId], references: [id])
-  userId   Int
-  provider String
+enum FieldType {
+  INT
+  FLOAT
+  STRING
+  DATE
+  BOOLEAN
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  email      String  @unique
+  password   String?
+  isVerified Boolean @default(false)
+  role       Role    @default(USER)
+}
+
+model Inventory {
+  id   Int    @id @default(autoincrement())
+  
+  name String
+
+  fields InventoryField[]
+  items  Item[]
+}
+
+model InventoryField {
+  id Int @id @default(autoincrement())
+
+  inventoryId Int
+  inventory   Inventory @relation(fields: [inventoryId], references: [id])
+
+  name       String
+  dataType   FieldType
+  isRequired Boolean     @default(false)
+  itemValues ItemValue[]
+
+  @@unique([inventoryId, name])
+}
+
+model Item {
+  id Int @id @default(autoincrement())
+
+  inventoryId Int
+  inventory   Inventory? @relation(fields: [inventoryId], references: [id])
+
+  itemValues ItemValue[]
+}
+
+model ItemValue {
+  itemId  Int
+  fieldId Int
+
+  item  Item           @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  field InventoryField @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+
+  intValue    Int?
+  floatValue  Float?
+  stringValue String?
+  dateValue   DateTime?
+  boolValue   Boolean?
+
+  @@id([itemId, fieldId])
 }

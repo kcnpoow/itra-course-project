@@ -4,11 +4,12 @@ import {
   StrategyOptionsWithoutRequest,
 } from "passport-jwt";
 
+import { env } from "../lib/env";
 import { prisma } from "../config/prisma";
 
 const options: StrategyOptionsWithoutRequest = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: "secret",
+  secretOrKey: env.JWT_SECRET,
   issuer: "example.com",
   audience: "project.com",
 };

@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 
+import { env } from "../lib/env";
 import { Prisma, User } from "../../prisma/generated/client";
 import { prisma } from "../config/prisma";
 import { SignupRequest } from "../types/signup-request";
@@ -7,17 +8,11 @@ import { ApiError } from "../errors/api.error";
 import { DATABASE_ERRORS } from "../consts/database-errors";
 
 class AuthService {
-  private readonly SALT: number;
-
-  constructor() {
-    this.SALT = Number(process.env.SALT);
-  }
-
   public signup = async (data: SignupRequest): Promise<User> => {
     try {
       const { email, password } = data;
 
-      const hashedPassword = await bcrypt.hash(password, this.SALT);
+      const hashedPassword = await bcrypt.hash(password, env.SALT);
 
       const user = await prisma.user.create({
         data: { email, password: hashedPassword },

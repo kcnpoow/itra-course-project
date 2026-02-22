@@ -7,7 +7,7 @@ export class ApiError extends Error {
     this.status = status;
   }
 
-  static BadRequest(message: string) {
+  static BadRequest(message = "Bad Request") {
     return new ApiError(message, 400);
   }
 
