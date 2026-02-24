@@ -2,7 +2,7 @@ import { Outlet } from "@tanstack/react-router";
 
 import { Header } from "@/widgets/header";
 
-export const Main = () => {
+export const MainLayout = () => {
   return (
     <>
       <Header />

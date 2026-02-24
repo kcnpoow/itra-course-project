@@ -22,7 +22,10 @@ authRouter.post("/signin", passport.authenticate("local"));
 // Google authentication
 authRouter.get(
   "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] }),
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    prompt: "select_account",
+  }),
 );
 authRouter.get(
   "/google/callback",

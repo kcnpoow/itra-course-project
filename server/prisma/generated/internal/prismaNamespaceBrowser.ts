@@ -51,7 +51,11 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Inventory: 'Inventory',
+  InventoryField: 'InventoryField',
+  Item: 'Item',
+  ItemValue: 'ItemValue'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -72,12 +76,53 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
+  role: 'role',
   email: 'email',
   password: 'password',
   isVerified: 'isVerified'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const InventoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type InventoryScalarFieldEnum = (typeof InventoryScalarFieldEnum)[keyof typeof InventoryScalarFieldEnum]
+
+
+export const InventoryFieldScalarFieldEnum = {
+  id: 'id',
+  inventoryId: 'inventoryId',
+  name: 'name',
+  dataType: 'dataType',
+  isRequired: 'isRequired'
+} as const
+
+export type InventoryFieldScalarFieldEnum = (typeof InventoryFieldScalarFieldEnum)[keyof typeof InventoryFieldScalarFieldEnum]
+
+
+export const ItemScalarFieldEnum = {
+  id: 'id',
+  inventoryId: 'inventoryId'
+} as const
+
+export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
+
+
+export const ItemValueScalarFieldEnum = {
+  itemId: 'itemId',
+  fieldId: 'fieldId',
+  intValue: 'intValue',
+  floatValue: 'floatValue',
+  stringValue: 'stringValue',
+  dateValue: 'dateValue',
+  boolValue: 'boolValue'
+} as const
+
+export type ItemValueScalarFieldEnum = (typeof ItemValueScalarFieldEnum)[keyof typeof ItemValueScalarFieldEnum]
 
 
 export const SortOrder = {

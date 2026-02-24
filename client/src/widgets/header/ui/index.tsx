@@ -12,8 +12,8 @@ export const Header = () => {
 
   return (
     <header className="border-b">
-      <div className="container flex items-center gap-4 py-2">
-        <Nav className="mr-auto" navigationItems={navigationItems} />
+      <div className="container flex items-center gap-4 py-4">
+        <Nav className="mr-auto" user={user} navItems={navigationItems} />
 
         <Search />
 

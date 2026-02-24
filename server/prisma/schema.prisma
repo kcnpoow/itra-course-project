@@ -14,6 +14,15 @@ enum Role {
   ADMIN
 }
 
+model User {
+  id Int @id @default(autoincrement())
+
+  role       Role    @default(USER)
+  email      String  @unique
+  password   String?
+  isVerified Boolean @default(false)
+}
+
 enum FieldType {
   INT
   FLOAT
@@ -22,18 +31,9 @@ enum FieldType {
   BOOLEAN
 }
 
-model User {
+model Inventory {
   id Int @id @default(autoincrement())
 
-  email      String  @unique
-  password   String?
-  isVerified Boolean @default(false)
-  role       Role    @default(USER)
-}
-
-model Inventory {
-  id   Int    @id @default(autoincrement())
-  
   name String
 
   fields InventoryField[]

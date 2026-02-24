@@ -36,7 +36,7 @@ export const UserDropdown = ({ user }: Props) => {
         </Avatar>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" sideOffset={6}>
         <DropdownMenuGroup>
           <DropdownMenuItem variant="destructive" onSelect={handleLogout}>
             <LogOutIcon /> Sign Out

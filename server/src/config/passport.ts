@@ -2,7 +2,6 @@ import passport from "passport";
 
 import { localStrategy } from "../strategies/local.strategy";
 import { googleStrategy } from "../strategies/google.strategy";
-import { User } from "../../prisma/generated/client";
 import { prisma } from "./prisma";
 
 passport.use("local", localStrategy);

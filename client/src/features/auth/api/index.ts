@@ -21,14 +21,6 @@ class AuthApi {
     return response.data;
   };
 
-  public singinWithGoogle = async (): Promise<User> => {
-    const url = `${this.BASE_URL}/google`;
-
-    const response = await api.get<User>(url);
-
-    return response.data;
-  };
-
   public logout = async (): Promise<void> => {
     const url = `${this.BASE_URL}/logout`;
 

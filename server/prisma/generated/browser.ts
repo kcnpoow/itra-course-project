@@ -22,3 +22,23 @@ export * from './enums';
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Inventory
+ * 
+ */
+export type Inventory = Prisma.InventoryModel
+/**
+ * Model InventoryField
+ * 
+ */
+export type InventoryField = Prisma.InventoryFieldModel
+/**
+ * Model Item
+ * 
+ */
+export type Item = Prisma.ItemModel
+/**
+ * Model ItemValue
+ * 
+ */
+export type ItemValue = Prisma.ItemValueModel

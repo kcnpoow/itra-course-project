@@ -14,6 +14,10 @@ import { Route as mainRouteRouteImport } from './routes/(main)/route'
 import { Route as mainIndexRouteImport } from './routes/(main)/index'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthSigninRouteImport } from './routes/auth/signin'
+import { Route as mainPersonalRouteRouteImport } from './routes/(main)/personal/route'
+import { Route as mainPersonalIndexRouteImport } from './routes/(main)/personal/index'
+import { Route as mainPersonalSharedRouteImport } from './routes/(main)/personal/shared'
+import { Route as mainPersonalOwnedRouteImport } from './routes/(main)/personal/owned'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/auth',
@@ -39,39 +43,89 @@ const AuthSigninRoute = AuthSigninRouteImport.update({
   path: '/signin',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const mainPersonalRouteRoute = mainPersonalRouteRouteImport.update({
+  id: '/personal',
+  path: '/personal',
+  getParentRoute: () => mainRouteRoute,
+} as any)
+const mainPersonalIndexRoute = mainPersonalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => mainPersonalRouteRoute,
+} as any)
+const mainPersonalSharedRoute = mainPersonalSharedRouteImport.update({
+  id: '/shared',
+  path: '/shared',
+  getParentRoute: () => mainPersonalRouteRoute,
+} as any)
+const mainPersonalOwnedRoute = mainPersonalOwnedRouteImport.update({
+  id: '/owned',
+  path: '/owned',
+  getParentRoute: () => mainPersonalRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteRouteWithChildren
+  '/personal': typeof mainPersonalRouteRouteWithChildren
   '/auth/signin': typeof AuthSigninRoute
   '/auth/signup': typeof AuthSignupRoute
   '/': typeof mainIndexRoute
+  '/personal/owned': typeof mainPersonalOwnedRoute
+  '/personal/shared': typeof mainPersonalSharedRoute
+  '/personal/': typeof mainPersonalIndexRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRouteRouteWithChildren
   '/auth/signin': typeof AuthSigninRoute
   '/auth/signup': typeof AuthSignupRoute
   '/': typeof mainIndexRoute
+  '/personal/owned': typeof mainPersonalOwnedRoute
+  '/personal/shared': typeof mainPersonalSharedRoute
+  '/personal': typeof mainPersonalIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(main)': typeof mainRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
+  '/(main)/personal': typeof mainPersonalRouteRouteWithChildren
   '/auth/signin': typeof AuthSigninRoute
   '/auth/signup': typeof AuthSignupRoute
   '/(main)/': typeof mainIndexRoute
+  '/(main)/personal/owned': typeof mainPersonalOwnedRoute
+  '/(main)/personal/shared': typeof mainPersonalSharedRoute
+  '/(main)/personal/': typeof mainPersonalIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/auth' | '/auth/signin' | '/auth/signup' | '/'
+  fullPaths:
+    | '/auth'
+    | '/personal'
+    | '/auth/signin'
+    | '/auth/signup'
+    | '/'
+    | '/personal/owned'
+    | '/personal/shared'
+    | '/personal/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/auth' | '/auth/signin' | '/auth/signup' | '/'
+  to:
+    | '/auth'
+    | '/auth/signin'
+    | '/auth/signup'
+    | '/'
+    | '/personal/owned'
+    | '/personal/shared'
+    | '/personal'
   id:
     | '__root__'
     | '/(main)'
     | '/auth'
+    | '/(main)/personal'
     | '/auth/signin'
     | '/auth/signup'
     | '/(main)/'
+    | '/(main)/personal/owned'
+    | '/(main)/personal/shared'
+    | '/(main)/personal/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -116,14 +170,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSigninRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/(main)/personal': {
+      id: '/(main)/personal'
+      path: '/personal'
+      fullPath: '/personal'
+      preLoaderRoute: typeof mainPersonalRouteRouteImport
+      parentRoute: typeof mainRouteRoute
+    }
+    '/(main)/personal/': {
+      id: '/(main)/personal/'
+      path: '/'
+      fullPath: '/personal/'
+      preLoaderRoute: typeof mainPersonalIndexRouteImport
+      parentRoute: typeof mainPersonalRouteRoute
+    }
+    '/(main)/personal/shared': {
+      id: '/(main)/personal/shared'
+      path: '/shared'
+      fullPath: '/personal/shared'
+      preLoaderRoute: typeof mainPersonalSharedRouteImport
+      parentRoute: typeof mainPersonalRouteRoute
+    }
+    '/(main)/personal/owned': {
+      id: '/(main)/personal/owned'
+      path: '/owned'
+      fullPath: '/personal/owned'
+      preLoaderRoute: typeof mainPersonalOwnedRouteImport
+      parentRoute: typeof mainPersonalRouteRoute
+    }
   }
 }
 
+interface mainPersonalRouteRouteChildren {
+  mainPersonalOwnedRoute: typeof mainPersonalOwnedRoute
+  mainPersonalSharedRoute: typeof mainPersonalSharedRoute
+  mainPersonalIndexRoute: typeof mainPersonalIndexRoute
+}
+
+const mainPersonalRouteRouteChildren: mainPersonalRouteRouteChildren = {
+  mainPersonalOwnedRoute: mainPersonalOwnedRoute,
+  mainPersonalSharedRoute: mainPersonalSharedRoute,
+  mainPersonalIndexRoute: mainPersonalIndexRoute,
+}
+
+const mainPersonalRouteRouteWithChildren =
+  mainPersonalRouteRoute._addFileChildren(mainPersonalRouteRouteChildren)
+
 interface mainRouteRouteChildren {
+  mainPersonalRouteRoute: typeof mainPersonalRouteRouteWithChildren
   mainIndexRoute: typeof mainIndexRoute
 }
 
 const mainRouteRouteChildren: mainRouteRouteChildren = {
+  mainPersonalRouteRoute: mainPersonalRouteRouteWithChildren,
   mainIndexRoute: mainIndexRoute,
 }
 

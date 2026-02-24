@@ -14,6 +14,8 @@ import {
 } from "@/shared/shadcn/components/ui/field";
 import { Input } from "@/shared/shadcn/components/ui/input";
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 export const SigninForm = () => {
   const form = useForm<SigninDto>({
     defaultValues: {
@@ -27,6 +29,8 @@ export const SigninForm = () => {
   const onSubmit = (data: SigninDto) => {
     mutation.mutate(data);
   };
+
+  const googleAuthUrl = `${SERVER_URL}/auth/google`;
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -58,13 +62,8 @@ export const SigninForm = () => {
         </FieldSeparator>
 
         <Field>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => authApi.singinWithGoogle()}
-            asChild
-          >
-            <a href="http://localhost:8080/auth/google">
+          <Button type="button" variant="outline" asChild>
+            <a href={googleAuthUrl}>
               <SiGoogle /> Login with Google
             </a>
           </Button>

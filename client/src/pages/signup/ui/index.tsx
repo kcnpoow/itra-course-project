@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/shared/shadcn/components/ui/card";
+import { Button } from "@/shared/shadcn/components/ui/button";
 
 export const Signup = () => {
   return (
@@ -28,7 +29,9 @@ export const Signup = () => {
           <span className="text-muted-foreground">
             Already have an account?
           </span>{" "}
-          <Link to="/auth/signin">Sign in</Link>
+          <Button className="p-0" variant="link" asChild>
+            <Link to="/auth/signin">Sign in</Link>
+          </Button>
         </p>
       </CardFooter>
     </Card>

@@ -21,9 +21,9 @@ export const localStrategy = new LocalStrategy(
       return done(null, false);
     }
 
-    // if (!user.isVerified) {
-    //   return done(null, false);
-    // }
+    if (!user.isVerified) {
+      return done(null, false);
+    }
 
     return done(null, user);
   },
