@@ -1,14 +1,12 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-
-import { PersonalLayout } from "@/app/layouts/personal-layout";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(main)/personal")({
-  component: PersonalLayout,
+  component: Outlet,
   beforeLoad: ({ context }) => {
     const { user } = context;
 
     if (!user) {
-      throw redirect({ to: "/", replace: true });
+      throw Route.redirect({ to: "/", replace: true });
     }
   },
 });

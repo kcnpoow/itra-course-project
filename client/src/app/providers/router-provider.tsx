@@ -46,10 +46,8 @@ export const RouterProvider = () => {
   });
 
   useEffect(() => {
-    if (!user && !isLoading) {
-      router.invalidate();
-    }
-  }, [user, isLoading]);
+    router.invalidate();
+  }, [user]);
 
   if (isLoading) {
     return (

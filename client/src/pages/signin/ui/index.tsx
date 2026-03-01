@@ -28,7 +28,7 @@ export const Signin = () => {
         <p className="mx-auto">
           <span className="text-muted-foreground">Don’t have an account?</span>{" "}
           <Button className="p-0" variant="link" asChild>
-            <Link to="/auth/signup">Sign up</Link>
+            <Link className="text-base!" to="/auth/signup">Sign up</Link>
           </Button>
         </p>
       </CardFooter>

@@ -3,19 +3,19 @@ import bcrypt from "bcrypt";
 import { env } from "../lib/env";
 import { Prisma, User } from "../../prisma/generated/client";
 import { prisma } from "../config/prisma";
-import { SignupRequest } from "../types/signup-request";
 import { ApiError } from "../errors/api.error";
 import { DATABASE_ERRORS } from "../consts/database-errors";
+import { SignupData } from "../schemas/signup.schema";
 
 class AuthService {
-  public signup = async (data: SignupRequest): Promise<User> => {
+  public signup = async (data: SignupData): Promise<User> => {
     try {
       const { email, password } = data;
 
       const hashedPassword = await bcrypt.hash(password, env.SALT);
 
       const user = await prisma.user.create({
-        data: { email, password: hashedPassword },
+        data: { email, password: hashedPassword, isVerified: true },
       });
 
       return user;

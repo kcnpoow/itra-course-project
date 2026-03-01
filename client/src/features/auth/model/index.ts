@@ -1,1 +1,2 @@
-export { type SigninDto } from "./signin";
+export { type SigninDto } from "./signin-dto";
+export { type SignupDto } from "./signup-dto";

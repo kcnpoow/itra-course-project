@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { MenuIcon } from "lucide-react";
 
 import { NavItemWrapper } from "./item-wrapper";
-import { type NavigationItem } from "../../model";
+import { type NavItem } from "../../model";
 import type { User } from "@/entities/user";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import {
@@ -17,7 +17,7 @@ import { useIsMobile } from "@/shared/shadcn/hooks/use-mobile";
 interface Props {
   className?: string;
   user: User | null;
-  navItems: NavigationItem[];
+  navItems: NavItem[];
 }
 
 export const Nav = ({ className, user, navItems }: Props) => {

@@ -4,7 +4,7 @@ import { UserDto } from "../dto/user-dto";
 import { ApiError } from "../errors/api.error";
 import { User } from "../../prisma/generated/client";
 import { authService } from "../services/auth.service";
-import { SignupRequest } from "../types/signup-request";
+import { SignupRequest } from "../schemas/signup.schema";
 
 class AuthController {
   public auth = async (req: Request, res: Response, next: NextFunction) => {
@@ -23,13 +23,19 @@ class AuthController {
     }
   };
 
-  public signup = async (req: Request, res: Response, next: NextFunction) => {
+  public signup = async (
+    req: SignupRequest,
+    res: Response,
+    next: NextFunction,
+  ) => {
     try {
-      const data = req.body as SignupRequest;
-
-      const user = await authService.signup(data);
+      const user = await authService.signup(req.body);
 
       const userDto = new UserDto(user);
+
+      req.login(user, (error) => {
+        throw error;
+      });
 
       return res.status(201).json(userDto);
     } catch (error) {

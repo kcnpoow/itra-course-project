@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 
-import type { NavigationItem } from "../../model";
+import type { NavItem } from "../../model";
 import type { User } from "@/entities/user";
 
 interface Props {
   children: ReactNode;
   user: User | null;
-  navItem: NavigationItem;
+  navItem: NavItem;
 }
 
 export const NavItemWrapper = ({ children, user, navItem }: Props) => {

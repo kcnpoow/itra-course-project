@@ -30,7 +30,7 @@ export const Signup = () => {
             Already have an account?
           </span>{" "}
           <Button className="p-0" variant="link" asChild>
-            <Link to="/auth/signin">Sign in</Link>
+            <Link className="text-base!" to="/auth/signin">Sign in</Link>
           </Button>
         </p>
       </CardFooter>

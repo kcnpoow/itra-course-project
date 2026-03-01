@@ -21,6 +21,8 @@ model User {
   email      String  @unique
   password   String?
   isVerified Boolean @default(false)
+
+  inventories Inventory[]
 }
 
 enum FieldType {
@@ -33,6 +35,9 @@ enum FieldType {
 
 model Inventory {
   id Int @id @default(autoincrement())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
 
   name String
 

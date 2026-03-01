@@ -16,8 +16,18 @@ import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthSigninRouteImport } from './routes/auth/signin'
 import { Route as mainPersonalRouteRouteImport } from './routes/(main)/personal/route'
 import { Route as mainPersonalIndexRouteImport } from './routes/(main)/personal/index'
-import { Route as mainPersonalSharedRouteImport } from './routes/(main)/personal/shared'
-import { Route as mainPersonalOwnedRouteImport } from './routes/(main)/personal/owned'
+import { Route as mainPersonalInventoriesRouteRouteImport } from './routes/(main)/personal/_inventories/route'
+import { Route as mainPersonalInventoryIdRouteRouteImport } from './routes/(main)/personal/$inventoryId/route'
+import { Route as mainPersonalInventoryIdIndexRouteImport } from './routes/(main)/personal/$inventoryId/index'
+import { Route as mainPersonalInventoriesSharedRouteImport } from './routes/(main)/personal/_inventories/shared'
+import { Route as mainPersonalInventoriesOwnedRouteImport } from './routes/(main)/personal/_inventories/owned'
+import { Route as mainPersonalInventoryIdStatisticsRouteImport } from './routes/(main)/personal/$inventoryId/statistics'
+import { Route as mainPersonalInventoryIdItemsRouteImport } from './routes/(main)/personal/$inventoryId/items'
+import { Route as mainPersonalInventoryIdInventoryNumbersRouteImport } from './routes/(main)/personal/$inventoryId/inventory-numbers'
+import { Route as mainPersonalInventoryIdGeneralSettingsRouteImport } from './routes/(main)/personal/$inventoryId/general-settings'
+import { Route as mainPersonalInventoryIdFieldsRouteImport } from './routes/(main)/personal/$inventoryId/fields'
+import { Route as mainPersonalInventoryIdDiscussionRouteImport } from './routes/(main)/personal/$inventoryId/discussion'
+import { Route as mainPersonalInventoryIdAccessSettingsRouteImport } from './routes/(main)/personal/$inventoryId/access-settings'
 
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/auth',
@@ -53,35 +63,113 @@ const mainPersonalIndexRoute = mainPersonalIndexRouteImport.update({
   path: '/',
   getParentRoute: () => mainPersonalRouteRoute,
 } as any)
-const mainPersonalSharedRoute = mainPersonalSharedRouteImport.update({
-  id: '/shared',
-  path: '/shared',
-  getParentRoute: () => mainPersonalRouteRoute,
-} as any)
-const mainPersonalOwnedRoute = mainPersonalOwnedRouteImport.update({
-  id: '/owned',
-  path: '/owned',
-  getParentRoute: () => mainPersonalRouteRoute,
-} as any)
+const mainPersonalInventoriesRouteRoute =
+  mainPersonalInventoriesRouteRouteImport.update({
+    id: '/_inventories',
+    getParentRoute: () => mainPersonalRouteRoute,
+  } as any)
+const mainPersonalInventoryIdRouteRoute =
+  mainPersonalInventoryIdRouteRouteImport.update({
+    id: '/$inventoryId',
+    path: '/$inventoryId',
+    getParentRoute: () => mainPersonalRouteRoute,
+  } as any)
+const mainPersonalInventoryIdIndexRoute =
+  mainPersonalInventoryIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => mainPersonalInventoryIdRouteRoute,
+  } as any)
+const mainPersonalInventoriesSharedRoute =
+  mainPersonalInventoriesSharedRouteImport.update({
+    id: '/shared',
+    path: '/shared',
+    getParentRoute: () => mainPersonalInventoriesRouteRoute,
+  } as any)
+const mainPersonalInventoriesOwnedRoute =
+  mainPersonalInventoriesOwnedRouteImport.update({
+    id: '/owned',
+    path: '/owned',
+    getParentRoute: () => mainPersonalInventoriesRouteRoute,
+  } as any)
+const mainPersonalInventoryIdStatisticsRoute =
+  mainPersonalInventoryIdStatisticsRouteImport.update({
+    id: '/statistics',
+    path: '/statistics',
+    getParentRoute: () => mainPersonalInventoryIdRouteRoute,
+  } as any)
+const mainPersonalInventoryIdItemsRoute =
+  mainPersonalInventoryIdItemsRouteImport.update({
+    id: '/items',
+    path: '/items',
+    getParentRoute: () => mainPersonalInventoryIdRouteRoute,
+  } as any)
+const mainPersonalInventoryIdInventoryNumbersRoute =
+  mainPersonalInventoryIdInventoryNumbersRouteImport.update({
+    id: '/inventory-numbers',
+    path: '/inventory-numbers',
+    getParentRoute: () => mainPersonalInventoryIdRouteRoute,
+  } as any)
+const mainPersonalInventoryIdGeneralSettingsRoute =
+  mainPersonalInventoryIdGeneralSettingsRouteImport.update({
+    id: '/general-settings',
+    path: '/general-settings',
+    getParentRoute: () => mainPersonalInventoryIdRouteRoute,
+  } as any)
+const mainPersonalInventoryIdFieldsRoute =
+  mainPersonalInventoryIdFieldsRouteImport.update({
+    id: '/fields',
+    path: '/fields',
+    getParentRoute: () => mainPersonalInventoryIdRouteRoute,
+  } as any)
+const mainPersonalInventoryIdDiscussionRoute =
+  mainPersonalInventoryIdDiscussionRouteImport.update({
+    id: '/discussion',
+    path: '/discussion',
+    getParentRoute: () => mainPersonalInventoryIdRouteRoute,
+  } as any)
+const mainPersonalInventoryIdAccessSettingsRoute =
+  mainPersonalInventoryIdAccessSettingsRouteImport.update({
+    id: '/access-settings',
+    path: '/access-settings',
+    getParentRoute: () => mainPersonalInventoryIdRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteRouteWithChildren
-  '/personal': typeof mainPersonalRouteRouteWithChildren
+  '/personal': typeof mainPersonalInventoriesRouteRouteWithChildren
   '/auth/signin': typeof AuthSigninRoute
   '/auth/signup': typeof AuthSignupRoute
   '/': typeof mainIndexRoute
-  '/personal/owned': typeof mainPersonalOwnedRoute
-  '/personal/shared': typeof mainPersonalSharedRoute
+  '/personal/$inventoryId': typeof mainPersonalInventoryIdRouteRouteWithChildren
   '/personal/': typeof mainPersonalIndexRoute
+  '/personal/$inventoryId/access-settings': typeof mainPersonalInventoryIdAccessSettingsRoute
+  '/personal/$inventoryId/discussion': typeof mainPersonalInventoryIdDiscussionRoute
+  '/personal/$inventoryId/fields': typeof mainPersonalInventoryIdFieldsRoute
+  '/personal/$inventoryId/general-settings': typeof mainPersonalInventoryIdGeneralSettingsRoute
+  '/personal/$inventoryId/inventory-numbers': typeof mainPersonalInventoryIdInventoryNumbersRoute
+  '/personal/$inventoryId/items': typeof mainPersonalInventoryIdItemsRoute
+  '/personal/$inventoryId/statistics': typeof mainPersonalInventoryIdStatisticsRoute
+  '/personal/owned': typeof mainPersonalInventoriesOwnedRoute
+  '/personal/shared': typeof mainPersonalInventoriesSharedRoute
+  '/personal/$inventoryId/': typeof mainPersonalInventoryIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRouteRouteWithChildren
   '/auth/signin': typeof AuthSigninRoute
   '/auth/signup': typeof AuthSignupRoute
   '/': typeof mainIndexRoute
-  '/personal/owned': typeof mainPersonalOwnedRoute
-  '/personal/shared': typeof mainPersonalSharedRoute
   '/personal': typeof mainPersonalIndexRoute
+  '/personal/$inventoryId/access-settings': typeof mainPersonalInventoryIdAccessSettingsRoute
+  '/personal/$inventoryId/discussion': typeof mainPersonalInventoryIdDiscussionRoute
+  '/personal/$inventoryId/fields': typeof mainPersonalInventoryIdFieldsRoute
+  '/personal/$inventoryId/general-settings': typeof mainPersonalInventoryIdGeneralSettingsRoute
+  '/personal/$inventoryId/inventory-numbers': typeof mainPersonalInventoryIdInventoryNumbersRoute
+  '/personal/$inventoryId/items': typeof mainPersonalInventoryIdItemsRoute
+  '/personal/$inventoryId/statistics': typeof mainPersonalInventoryIdStatisticsRoute
+  '/personal/owned': typeof mainPersonalInventoriesOwnedRoute
+  '/personal/shared': typeof mainPersonalInventoriesSharedRoute
+  '/personal/$inventoryId': typeof mainPersonalInventoryIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -91,9 +179,19 @@ export interface FileRoutesById {
   '/auth/signin': typeof AuthSigninRoute
   '/auth/signup': typeof AuthSignupRoute
   '/(main)/': typeof mainIndexRoute
-  '/(main)/personal/owned': typeof mainPersonalOwnedRoute
-  '/(main)/personal/shared': typeof mainPersonalSharedRoute
+  '/(main)/personal/$inventoryId': typeof mainPersonalInventoryIdRouteRouteWithChildren
+  '/(main)/personal/_inventories': typeof mainPersonalInventoriesRouteRouteWithChildren
   '/(main)/personal/': typeof mainPersonalIndexRoute
+  '/(main)/personal/$inventoryId/access-settings': typeof mainPersonalInventoryIdAccessSettingsRoute
+  '/(main)/personal/$inventoryId/discussion': typeof mainPersonalInventoryIdDiscussionRoute
+  '/(main)/personal/$inventoryId/fields': typeof mainPersonalInventoryIdFieldsRoute
+  '/(main)/personal/$inventoryId/general-settings': typeof mainPersonalInventoryIdGeneralSettingsRoute
+  '/(main)/personal/$inventoryId/inventory-numbers': typeof mainPersonalInventoryIdInventoryNumbersRoute
+  '/(main)/personal/$inventoryId/items': typeof mainPersonalInventoryIdItemsRoute
+  '/(main)/personal/$inventoryId/statistics': typeof mainPersonalInventoryIdStatisticsRoute
+  '/(main)/personal/_inventories/owned': typeof mainPersonalInventoriesOwnedRoute
+  '/(main)/personal/_inventories/shared': typeof mainPersonalInventoriesSharedRoute
+  '/(main)/personal/$inventoryId/': typeof mainPersonalInventoryIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -103,18 +201,35 @@ export interface FileRouteTypes {
     | '/auth/signin'
     | '/auth/signup'
     | '/'
+    | '/personal/$inventoryId'
+    | '/personal/'
+    | '/personal/$inventoryId/access-settings'
+    | '/personal/$inventoryId/discussion'
+    | '/personal/$inventoryId/fields'
+    | '/personal/$inventoryId/general-settings'
+    | '/personal/$inventoryId/inventory-numbers'
+    | '/personal/$inventoryId/items'
+    | '/personal/$inventoryId/statistics'
     | '/personal/owned'
     | '/personal/shared'
-    | '/personal/'
+    | '/personal/$inventoryId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
     | '/auth/signin'
     | '/auth/signup'
     | '/'
+    | '/personal'
+    | '/personal/$inventoryId/access-settings'
+    | '/personal/$inventoryId/discussion'
+    | '/personal/$inventoryId/fields'
+    | '/personal/$inventoryId/general-settings'
+    | '/personal/$inventoryId/inventory-numbers'
+    | '/personal/$inventoryId/items'
+    | '/personal/$inventoryId/statistics'
     | '/personal/owned'
     | '/personal/shared'
-    | '/personal'
+    | '/personal/$inventoryId'
   id:
     | '__root__'
     | '/(main)'
@@ -123,9 +238,19 @@ export interface FileRouteTypes {
     | '/auth/signin'
     | '/auth/signup'
     | '/(main)/'
-    | '/(main)/personal/owned'
-    | '/(main)/personal/shared'
+    | '/(main)/personal/$inventoryId'
+    | '/(main)/personal/_inventories'
     | '/(main)/personal/'
+    | '/(main)/personal/$inventoryId/access-settings'
+    | '/(main)/personal/$inventoryId/discussion'
+    | '/(main)/personal/$inventoryId/fields'
+    | '/(main)/personal/$inventoryId/general-settings'
+    | '/(main)/personal/$inventoryId/inventory-numbers'
+    | '/(main)/personal/$inventoryId/items'
+    | '/(main)/personal/$inventoryId/statistics'
+    | '/(main)/personal/_inventories/owned'
+    | '/(main)/personal/_inventories/shared'
+    | '/(main)/personal/$inventoryId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -184,32 +309,153 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof mainPersonalIndexRouteImport
       parentRoute: typeof mainPersonalRouteRoute
     }
-    '/(main)/personal/shared': {
-      id: '/(main)/personal/shared'
-      path: '/shared'
-      fullPath: '/personal/shared'
-      preLoaderRoute: typeof mainPersonalSharedRouteImport
+    '/(main)/personal/_inventories': {
+      id: '/(main)/personal/_inventories'
+      path: ''
+      fullPath: '/personal'
+      preLoaderRoute: typeof mainPersonalInventoriesRouteRouteImport
       parentRoute: typeof mainPersonalRouteRoute
     }
-    '/(main)/personal/owned': {
-      id: '/(main)/personal/owned'
+    '/(main)/personal/$inventoryId': {
+      id: '/(main)/personal/$inventoryId'
+      path: '/$inventoryId'
+      fullPath: '/personal/$inventoryId'
+      preLoaderRoute: typeof mainPersonalInventoryIdRouteRouteImport
+      parentRoute: typeof mainPersonalRouteRoute
+    }
+    '/(main)/personal/$inventoryId/': {
+      id: '/(main)/personal/$inventoryId/'
+      path: '/'
+      fullPath: '/personal/$inventoryId/'
+      preLoaderRoute: typeof mainPersonalInventoryIdIndexRouteImport
+      parentRoute: typeof mainPersonalInventoryIdRouteRoute
+    }
+    '/(main)/personal/_inventories/shared': {
+      id: '/(main)/personal/_inventories/shared'
+      path: '/shared'
+      fullPath: '/personal/shared'
+      preLoaderRoute: typeof mainPersonalInventoriesSharedRouteImport
+      parentRoute: typeof mainPersonalInventoriesRouteRoute
+    }
+    '/(main)/personal/_inventories/owned': {
+      id: '/(main)/personal/_inventories/owned'
       path: '/owned'
       fullPath: '/personal/owned'
-      preLoaderRoute: typeof mainPersonalOwnedRouteImport
-      parentRoute: typeof mainPersonalRouteRoute
+      preLoaderRoute: typeof mainPersonalInventoriesOwnedRouteImport
+      parentRoute: typeof mainPersonalInventoriesRouteRoute
+    }
+    '/(main)/personal/$inventoryId/statistics': {
+      id: '/(main)/personal/$inventoryId/statistics'
+      path: '/statistics'
+      fullPath: '/personal/$inventoryId/statistics'
+      preLoaderRoute: typeof mainPersonalInventoryIdStatisticsRouteImport
+      parentRoute: typeof mainPersonalInventoryIdRouteRoute
+    }
+    '/(main)/personal/$inventoryId/items': {
+      id: '/(main)/personal/$inventoryId/items'
+      path: '/items'
+      fullPath: '/personal/$inventoryId/items'
+      preLoaderRoute: typeof mainPersonalInventoryIdItemsRouteImport
+      parentRoute: typeof mainPersonalInventoryIdRouteRoute
+    }
+    '/(main)/personal/$inventoryId/inventory-numbers': {
+      id: '/(main)/personal/$inventoryId/inventory-numbers'
+      path: '/inventory-numbers'
+      fullPath: '/personal/$inventoryId/inventory-numbers'
+      preLoaderRoute: typeof mainPersonalInventoryIdInventoryNumbersRouteImport
+      parentRoute: typeof mainPersonalInventoryIdRouteRoute
+    }
+    '/(main)/personal/$inventoryId/general-settings': {
+      id: '/(main)/personal/$inventoryId/general-settings'
+      path: '/general-settings'
+      fullPath: '/personal/$inventoryId/general-settings'
+      preLoaderRoute: typeof mainPersonalInventoryIdGeneralSettingsRouteImport
+      parentRoute: typeof mainPersonalInventoryIdRouteRoute
+    }
+    '/(main)/personal/$inventoryId/fields': {
+      id: '/(main)/personal/$inventoryId/fields'
+      path: '/fields'
+      fullPath: '/personal/$inventoryId/fields'
+      preLoaderRoute: typeof mainPersonalInventoryIdFieldsRouteImport
+      parentRoute: typeof mainPersonalInventoryIdRouteRoute
+    }
+    '/(main)/personal/$inventoryId/discussion': {
+      id: '/(main)/personal/$inventoryId/discussion'
+      path: '/discussion'
+      fullPath: '/personal/$inventoryId/discussion'
+      preLoaderRoute: typeof mainPersonalInventoryIdDiscussionRouteImport
+      parentRoute: typeof mainPersonalInventoryIdRouteRoute
+    }
+    '/(main)/personal/$inventoryId/access-settings': {
+      id: '/(main)/personal/$inventoryId/access-settings'
+      path: '/access-settings'
+      fullPath: '/personal/$inventoryId/access-settings'
+      preLoaderRoute: typeof mainPersonalInventoryIdAccessSettingsRouteImport
+      parentRoute: typeof mainPersonalInventoryIdRouteRoute
     }
   }
 }
 
+interface mainPersonalInventoryIdRouteRouteChildren {
+  mainPersonalInventoryIdAccessSettingsRoute: typeof mainPersonalInventoryIdAccessSettingsRoute
+  mainPersonalInventoryIdDiscussionRoute: typeof mainPersonalInventoryIdDiscussionRoute
+  mainPersonalInventoryIdFieldsRoute: typeof mainPersonalInventoryIdFieldsRoute
+  mainPersonalInventoryIdGeneralSettingsRoute: typeof mainPersonalInventoryIdGeneralSettingsRoute
+  mainPersonalInventoryIdInventoryNumbersRoute: typeof mainPersonalInventoryIdInventoryNumbersRoute
+  mainPersonalInventoryIdItemsRoute: typeof mainPersonalInventoryIdItemsRoute
+  mainPersonalInventoryIdStatisticsRoute: typeof mainPersonalInventoryIdStatisticsRoute
+  mainPersonalInventoryIdIndexRoute: typeof mainPersonalInventoryIdIndexRoute
+}
+
+const mainPersonalInventoryIdRouteRouteChildren: mainPersonalInventoryIdRouteRouteChildren =
+  {
+    mainPersonalInventoryIdAccessSettingsRoute:
+      mainPersonalInventoryIdAccessSettingsRoute,
+    mainPersonalInventoryIdDiscussionRoute:
+      mainPersonalInventoryIdDiscussionRoute,
+    mainPersonalInventoryIdFieldsRoute: mainPersonalInventoryIdFieldsRoute,
+    mainPersonalInventoryIdGeneralSettingsRoute:
+      mainPersonalInventoryIdGeneralSettingsRoute,
+    mainPersonalInventoryIdInventoryNumbersRoute:
+      mainPersonalInventoryIdInventoryNumbersRoute,
+    mainPersonalInventoryIdItemsRoute: mainPersonalInventoryIdItemsRoute,
+    mainPersonalInventoryIdStatisticsRoute:
+      mainPersonalInventoryIdStatisticsRoute,
+    mainPersonalInventoryIdIndexRoute: mainPersonalInventoryIdIndexRoute,
+  }
+
+const mainPersonalInventoryIdRouteRouteWithChildren =
+  mainPersonalInventoryIdRouteRoute._addFileChildren(
+    mainPersonalInventoryIdRouteRouteChildren,
+  )
+
+interface mainPersonalInventoriesRouteRouteChildren {
+  mainPersonalInventoriesOwnedRoute: typeof mainPersonalInventoriesOwnedRoute
+  mainPersonalInventoriesSharedRoute: typeof mainPersonalInventoriesSharedRoute
+}
+
+const mainPersonalInventoriesRouteRouteChildren: mainPersonalInventoriesRouteRouteChildren =
+  {
+    mainPersonalInventoriesOwnedRoute: mainPersonalInventoriesOwnedRoute,
+    mainPersonalInventoriesSharedRoute: mainPersonalInventoriesSharedRoute,
+  }
+
+const mainPersonalInventoriesRouteRouteWithChildren =
+  mainPersonalInventoriesRouteRoute._addFileChildren(
+    mainPersonalInventoriesRouteRouteChildren,
+  )
+
 interface mainPersonalRouteRouteChildren {
-  mainPersonalOwnedRoute: typeof mainPersonalOwnedRoute
-  mainPersonalSharedRoute: typeof mainPersonalSharedRoute
+  mainPersonalInventoryIdRouteRoute: typeof mainPersonalInventoryIdRouteRouteWithChildren
+  mainPersonalInventoriesRouteRoute: typeof mainPersonalInventoriesRouteRouteWithChildren
   mainPersonalIndexRoute: typeof mainPersonalIndexRoute
 }
 
 const mainPersonalRouteRouteChildren: mainPersonalRouteRouteChildren = {
-  mainPersonalOwnedRoute: mainPersonalOwnedRoute,
-  mainPersonalSharedRoute: mainPersonalSharedRoute,
+  mainPersonalInventoryIdRouteRoute:
+    mainPersonalInventoryIdRouteRouteWithChildren,
+  mainPersonalInventoriesRouteRoute:
+    mainPersonalInventoriesRouteRouteWithChildren,
   mainPersonalIndexRoute: mainPersonalIndexRoute,
 }
 

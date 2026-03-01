@@ -1,19 +1,20 @@
 import passport from "passport";
 
+import { prisma } from "./prisma";
+import { User } from "../../prisma/generated/client";
 import { localStrategy } from "../strategies/local.strategy";
 import { googleStrategy } from "../strategies/google.strategy";
-import { prisma } from "./prisma";
 
 passport.use("local", localStrategy);
 passport.use("google", googleStrategy);
 
-passport.serializeUser((user: any, done) => {
-  done(null, user.id);
+passport.serializeUser((session: User, done) => {
+  return done(null, { id: session.id, role: session.role });
 });
 
-passport.deserializeUser(async (id: number, done) => {
+passport.deserializeUser(async (session: User, done) => {
   try {
-    const user = await prisma.user.findUnique({ where: { id } });
+    const user = await prisma.user.findUnique({ where: { id: session.id } });
 
     return done(null, user);
   } catch (error) {

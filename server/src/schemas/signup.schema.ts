@@ -1,8 +1,7 @@
 import { z } from "zod";
+import { ValidatedRequest } from "express-zod-safe";
 
-import { RequestSchema } from "../types/request-schema";
-
-export const signupSchema: RequestSchema = {
+export const signupSchema = {
   body: z
     .object({
       email: z.email(),
@@ -11,3 +10,7 @@ export const signupSchema: RequestSchema = {
     })
     .refine((data) => data.password === data.confirmPassword),
 };
+
+export type SignupRequest = ValidatedRequest<typeof signupSchema>;
+
+export type SignupData = z.infer<typeof signupSchema.body>;

@@ -5,6 +5,7 @@ import cors from "cors";
 import { env } from "./lib/env";
 import { passport } from "./config/passport";
 import { authRouter } from "./routers/auth.router";
+import { inventoryRouter } from "./routers/inventory.router";
 import { errorMiddleware } from "./middlewares/error.middleware";
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/auth", authRouter);
+app.use("/inventories", inventoryRouter);
 app.use(errorMiddleware);
 
 app.listen(env.PORT, async (error) => {

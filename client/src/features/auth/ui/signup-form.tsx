@@ -1,37 +1,108 @@
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { AxiosError } from "axios";
+
+import { authApi } from "../api";
+import type { SignupDto } from "../model";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import {
   Field,
+  FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/shared/shadcn/components/ui/field";
 import { Input } from "@/shared/shadcn/components/ui/input";
+import { Spinner } from "@/shared/shadcn/components/ui/spinner";
+import { useAuthStore } from "@/shared/store/auth-store";
 
 export const SignupForm = () => {
+  const auth = useAuthStore();
+
+  const form = useForm<SignupDto>();
+
+  const signupMutation = useMutation({
+    mutationFn: authApi.signup,
+    onSuccess: (data) => {
+      auth.login(data);
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        if (error.status === 409) {
+          form.setError("email", { message: "Email is already registered" });
+        }
+      }
+    },
+  });
+
   return (
-    <form>
-      <FieldGroup>
-        <Field>
-          <FieldLabel>Email</FieldLabel>
+    <form
+      noValidate
+      onSubmit={form.handleSubmit((data) => signupMutation.mutate(data))}
+    >
+      <fieldset disabled={signupMutation.isPending}>
+        <FieldGroup>
+          <Field>
+            <FieldLabel>Email</FieldLabel>
 
-          <Input />
-        </Field>
+            <Input
+              type="email"
+              {...form.register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+            />
 
-        <Field>
-          <FieldLabel>Password</FieldLabel>
+            {form.formState.errors.email && (
+              <FieldError>{form.formState.errors.email.message}</FieldError>
+            )}
+          </Field>
 
-          <Input />
-        </Field>
+          <Field>
+            <FieldLabel>Password</FieldLabel>
 
-        <Field>
-          <FieldLabel>Confirm password</FieldLabel>
+            <Input
+              type="password"
+              {...form.register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters long",
+                },
+              })}
+            />
 
-          <Input />
-        </Field>
+            {form.formState.errors.password && (
+              <FieldError>{form.formState.errors.password.message}</FieldError>
+            )}
+          </Field>
 
-        <Field>
-          <Button type="submit">Register</Button>
-        </Field>
-      </FieldGroup>
+          <Field>
+            <FieldLabel>Confirm password</FieldLabel>
+
+            <Input
+              type="password"
+              {...form.register("confirmPassword", {
+                required: "Confirm password is required",
+              })}
+            />
+
+            {form.formState.errors.confirmPassword && (
+              <FieldError>
+                {form.formState.errors.confirmPassword.message}
+              </FieldError>
+            )}
+          </Field>
+
+          <Field>
+            <Button type="submit">
+              {signupMutation.isPending ? <Spinner /> : "Register"}
+            </Button>
+          </Field>
+        </FieldGroup>
+      </fieldset>
     </form>
   );
 };

@@ -1,4 +1,4 @@
-import type { SigninDto } from "../model";
+import type { SigninDto, SignupDto } from "../model";
 import type { User } from "@/entities/user";
 import { api } from "@/shared/api/base";
 
@@ -15,6 +15,14 @@ class AuthApi {
 
   public signin = async (data: SigninDto): Promise<User> => {
     const url = `${this.BASE_URL}/signin`;
+
+    const response = await api.post<User>(url, data);
+
+    return response.data;
+  };
+
+  public signup = async (data: SignupDto): Promise<User> => {
+    const url = `${this.BASE_URL}/signup`;
 
     const response = await api.post<User>(url, data);
 

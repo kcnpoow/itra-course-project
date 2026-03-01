@@ -1,78 +1,128 @@
-import { Link } from "@tanstack/react-router";
+import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
+import { Link } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
-import { SiGoogle, SiFacebook } from "@icons-pack/react-simple-icons";
 
+import { Socials } from "./socials";
 import { authApi } from "../api";
 import type { SigninDto } from "../model";
 import { Button } from "@/shared/shadcn/components/ui/button";
 import {
   Field,
+  FieldError,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
 } from "@/shared/shadcn/components/ui/field";
 import { Input } from "@/shared/shadcn/components/ui/input";
-
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+import { Alert, AlertDescription } from "@/shared/shadcn/components/ui/alert";
+import { Spinner } from "@/shared/shadcn/components/ui/spinner";
+import { useAuthStore } from "@/shared/store/auth-store";
 
 export const SigninForm = () => {
+  const auth = useAuthStore();
+
   const form = useForm<SigninDto>({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "kcnpoow@gmail.com",
+      password: "123456",
     },
   });
 
-  const mutation = useMutation({ mutationFn: authApi.signin });
+  const signinMutation = useMutation({
+    mutationFn: authApi.signin,
+    onSuccess: (data) => {
+      auth.login(data);
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        if (error.status === 401) {
+          form.setError("root", {
+            message: "Incorrect email or password",
+          });
+        }
+      }
+    },
+  });
 
   const onSubmit = (data: SigninDto) => {
-    mutation.mutate(data);
+    signinMutation.mutate(data);
   };
 
-  const googleAuthUrl = `${SERVER_URL}/auth/google`;
-
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      <FieldGroup>
-        <Field>
-          <FieldLabel>Email</FieldLabel>
+    <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
+      <fieldset disabled={signinMutation.isPending}>
+        <FieldGroup>
+          <Field>
+            <FieldLabel>Email</FieldLabel>
 
-          <Input {...form.register("email")} />
-        </Field>
+            <Input
+              {...form.register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+                onChange: () => {
+                  form.clearErrors("root");
+                },
+              })}
+            />
 
-        <Field>
-          <div className="flex justify-between">
-            <FieldLabel>Password</FieldLabel>
+            {form.formState.errors.email && (
+              <FieldError>{form.formState.errors.email.message}</FieldError>
+            )}
+          </Field>
 
-            <Link className="text-sm text-muted-foreground" to="/auth">
-              Forgot password?
-            </Link>
-          </div>
+          <Field>
+            <div className="flex justify-between">
+              <FieldLabel>Password</FieldLabel>
 
-          <Input {...form.register("password")} />
-        </Field>
+              <Link className="text-sm text-muted-foreground" to="/auth">
+                Forgot password?
+              </Link>
+            </div>
 
-        <Field>
-          <Button type="submit">Login</Button>
-        </Field>
+            <Input
+              type="password"
+              {...form.register("password", {
+                required: "Password is required",
+                onChange: () => {
+                  form.clearErrors("root");
+                },
+              })}
+            />
 
-        <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-          or continue with
-        </FieldSeparator>
+            {form.formState.errors.password && (
+              <FieldError>{form.formState.errors.password.message}</FieldError>
+            )}
+          </Field>
 
-        <Field>
-          <Button type="button" variant="outline" asChild>
-            <a href={googleAuthUrl}>
-              <SiGoogle /> Login with Google
-            </a>
-          </Button>
+          {form.formState.errors.root && (
+            <Field>
+              <Alert variant="destructive">
+                <AlertDescription className="justify-center">
+                  {form.formState.errors.root.message}
+                </AlertDescription>
+              </Alert>
+            </Field>
+          )}
 
-          <Button type="button" variant="outline">
-            <SiFacebook /> Login with Facebook
-          </Button>
-        </Field>
-      </FieldGroup>
+          <Field>
+            <Button type="submit">
+              {signinMutation.isPending ? <Spinner /> : "Login"}
+            </Button>
+          </Field>
+
+          <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
+            or continue with
+          </FieldSeparator>
+
+          <Field>
+            <Socials />
+          </Field>
+        </FieldGroup>
+      </fieldset>
     </form>
   );
 };
