@@ -13,7 +13,7 @@ import { Spinner } from "@/shared/shadcn/components/ui/spinner";
 const router = createRouter({
   routeTree,
   notFoundMode: "root",
-  context: { user: null },
+  context: { user: undefined! },
 });
 
 declare module "@tanstack/react-router" {

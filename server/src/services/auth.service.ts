@@ -8,17 +8,15 @@ import { DATABASE_ERRORS } from "../consts/database-errors";
 import { SignupData } from "../schemas/signup.schema";
 
 class AuthService {
-  public signup = async (data: SignupData): Promise<User> => {
+  public signup = async (data: SignupData): Promise<void> => {
     try {
       const { email, password } = data;
 
       const hashedPassword = await bcrypt.hash(password, env.SALT);
 
-      const user = await prisma.user.create({
+      await prisma.user.create({
         data: { email, password: hashedPassword, isVerified: true },
       });
-
-      return user;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         switch (error.code) {

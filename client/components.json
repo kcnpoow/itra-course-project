@@ -17,7 +17,8 @@
     "utils": "@/shared/shadcn/lib/utils",
     "ui": "@/shared/shadcn/components/ui",
     "lib": "@/shared/shadcn/lib",
-    "hooks": "@/shared/shadcn/hooks"
+    "hooks": "@/shared/shadcn/hooks",
+    "blocks": "@/shared/shadcn/blocks"
   },
   "registries": {
     "@shadcn-editor": "https://shadcn-editor.vercel.app/r/{name}.json"

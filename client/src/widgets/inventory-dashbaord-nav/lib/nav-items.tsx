@@ -7,15 +7,15 @@ export const navItems: NavItem[] = [
   },
   {
     title: "Chat",
-    href: "/personal/$inventoryId/discussion",
+    href: "/personal/$inventoryId/chat",
   },
   {
     title: "Settings",
-    href: "/personal/$inventoryId/general-settings",
+    href: "/personal/$inventoryId/settings",
   },
   {
     title: "Custom ID",
-    href: "/personal/$inventoryId/inventory-numbers",
+    href: "/personal/$inventoryId/custom-id",
   },
   {
     title: "Fields",
@@ -23,7 +23,7 @@ export const navItems: NavItem[] = [
   },
   {
     title: "Access",
-    href: "/personal/$inventoryId/access-settings",
+    href: "/personal/$inventoryId/access",
   },
   {
     title: "Stats",

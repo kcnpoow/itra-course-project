@@ -13,18 +13,18 @@ import {
 } from "@/shared/shadcn/components/ui/field";
 import { Input } from "@/shared/shadcn/components/ui/input";
 import { Spinner } from "@/shared/shadcn/components/ui/spinner";
-import { useAuthStore } from "@/shared/store/auth-store";
 
 export const SignupForm = () => {
-  const auth = useAuthStore();
-
-  const form = useForm<SignupDto>();
+  const form = useForm<SignupDto>({
+    defaultValues: {
+      email: "kcnpoow@gmail.com",
+      password: "123456",
+      confirmPassword: "123456",
+    },
+  });
 
   const signupMutation = useMutation({
     mutationFn: authApi.signup,
-    onSuccess: (data) => {
-      auth.login(data);
-    },
     onError: (error) => {
       if (error instanceof AxiosError) {
         if (error.status === 409) {

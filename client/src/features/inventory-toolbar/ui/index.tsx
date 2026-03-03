@@ -30,7 +30,7 @@ export const InventoryToolbar = ({ className }: Props) => {
   const isAnyPending = createMutation.isPending || deleteMutation.isPending;
 
   return (
-    <div className={clsx("flex gap-4", className)}>
+    <div className={clsx("flex gap-2", className)}>
       <ActionButton
         title="Create Inventory"
         icon={<PlusIcon />}

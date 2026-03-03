@@ -4,6 +4,7 @@ import { Nav } from "./nav";
 import { UserDropdown } from "./user-dropdown";
 import { navItems } from "../lib/nav-items";
 import { Search } from "@/features/search";
+import { ThemeToggler } from "@/features/theme-toggler";
 import { useAuthStore } from "@/shared/store/auth-store";
 import { Button } from "@/shared/shadcn/components/ui/button";
 
@@ -16,6 +17,8 @@ export const Header = () => {
         <Nav className="mr-auto" user={user} navItems={navItems} />
 
         <Search />
+
+        <ThemeToggler />
 
         {user ? (
           <UserDropdown user={user} />

@@ -29,15 +29,9 @@ class AuthController {
     next: NextFunction,
   ) => {
     try {
-      const user = await authService.signup(req.body);
+      await authService.signup(req.body);
 
-      const userDto = new UserDto(user);
-
-      req.login(user, (error) => {
-        throw error;
-      });
-
-      return res.status(201).json(userDto);
+      return res.sendStatus(201);
     } catch (error) {
       return next(error);
     }

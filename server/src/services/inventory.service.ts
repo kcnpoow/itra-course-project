@@ -4,11 +4,12 @@ import { GetInventoryData } from "../schemas/get-inventory.schema";
 import { User, Prisma } from "../../prisma/generated/client";
 import { DATABASE_ERRORS } from "../consts/database-errors";
 import { ApiError } from "../errors/api.error";
+import { UpdateSettingsData } from "../schemas/update-settings";
 
 class InventoryService {
   public create = async (user: User): Promise<Inventory> => {
     const inventory = await prisma.inventory.create({
-      data: { userId: user.id, name: "test" },
+      data: { userId: user.id, name: "test", description: "" },
     });
 
     return inventory;
@@ -36,6 +37,17 @@ class InventoryService {
   public getOwned = async (user: User): Promise<Inventory[]> => {
     const inventory = await prisma.inventory.findMany({
       where: { userId: user.id },
+    });
+
+    return inventory;
+  };
+
+  public updateSettings = async (
+    data: UpdateSettingsData,
+  ): Promise<Inventory> => {
+    const inventory = await prisma.inventory.update({
+      where: { id: data.inventoryId },
+      data: { ...data },
     });
 
     return inventory;

@@ -1,1 +1,0 @@
-export { Owned } from "./ui";
