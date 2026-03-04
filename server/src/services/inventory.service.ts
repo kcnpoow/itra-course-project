@@ -43,10 +43,11 @@ class InventoryService {
   };
 
   public updateSettings = async (
+    inventoryId: number,
     data: UpdateSettingsData,
   ): Promise<Inventory> => {
     const inventory = await prisma.inventory.update({
-      where: { id: data.inventoryId },
+      where: { id: inventoryId },
       data: { ...data },
     });
 

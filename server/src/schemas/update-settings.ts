@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ValidatedRequest } from "express-zod-safe";
 
-export const updateSettingsChema = {
+export const updateSettingsSchema = {
   params: z.object({
     inventoryId: z.coerce.number(),
   }),
@@ -12,9 +12,7 @@ export const updateSettingsChema = {
 };
 
 export type UpdateSettingsRequest = ValidatedRequest<
-  typeof updateSettingsChema
+  typeof updateSettingsSchema
 >;
 
-export type UpdateSettingsData = z.infer<
-  typeof updateSettingsChema.params & typeof updateSettingsChema.body
->;
+export type UpdateSettingsData = z.infer<typeof updateSettingsSchema.body>;

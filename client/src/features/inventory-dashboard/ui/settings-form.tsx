@@ -1,9 +1,9 @@
 import { Controller, useForm } from "react-hook-form";
-import { useLoaderData } from "@tanstack/react-router";
 
 import { useAutoSave } from "../lib";
 
-import { UpdateSettingsDto } from "../model";
+import { Inventory } from "@/entities/inventory/model";
+import { inventoryApi, UpdateSettingsDto } from "@/entities/inventory";
 import {
   Field,
   FieldError,
@@ -13,11 +13,11 @@ import {
 import { Input } from "@/shared/shadcn/components/ui/input";
 import { Editor } from "@/components/blocks/editor-md/editor";
 
-export const SettingsForm = () => {
-  const { inventory } = useLoaderData({
-    from: "/(main)/personal/$inventoryId",
-  });
+interface Props {
+  inventory: Inventory;
+}
 
+export const SettingsForm = ({ inventory }: Props) => {
   const form = useForm<UpdateSettingsDto>({
     defaultValues: {
       name: inventory.name,
@@ -26,9 +26,7 @@ export const SettingsForm = () => {
     mode: "onChange",
   });
 
-  useAutoSave(form, async (data) => {
-    console.log(data);
-  });
+  const autoSave = useAutoSave(inventory.id, form, inventoryApi.updateSettings);
 
   return (
     <form>
@@ -60,6 +58,8 @@ export const SettingsForm = () => {
           />
         </Field>
       </FieldGroup>
+
+      {autoSave.isSaving && "pending"}
     </form>
   );
 };

@@ -40,16 +40,16 @@ class InventoryController {
     }
   };
 
-  public updateSettins = async (
+  public updateSettings = async (
     req: UpdateSettingsRequest,
     res: Response,
     next: NextFunction,
   ) => {
     try {
-      const inventory = await inventoryService.updateSettings({
-        ...req.params,
-        ...req.body,
-      });
+      const inventory = await inventoryService.updateSettings(
+        req.params.inventoryId,
+        req.body,
+      );
 
       return res.status(200).json(inventory);
     } catch (error) {

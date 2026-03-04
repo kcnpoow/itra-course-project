@@ -1,4 +1,4 @@
-import type { GetInventoryDto, Inventory } from "../model";
+import type { GetInventoryDto, Inventory, UpdateSettingsDto } from "../model";
 import { api } from "@/shared/api/base";
 
 class InventoryApi {
@@ -24,6 +24,20 @@ class InventoryApi {
     const url = `${this.BASE_URL}/owned`;
 
     const response = await api.get(url);
+
+    return response.data;
+  };
+
+  public updateSettings = async ({
+    inventoryId,
+    data,
+  }: {
+    inventoryId: number;
+    data: UpdateSettingsDto;
+  }) => {
+    const url = `${this.BASE_URL}/${inventoryId}/update-settings`;
+
+    const response = await api.patch(url, data);
 
     return response.data;
   };

@@ -127,7 +127,7 @@
     @apply px-4 mx-auto;
   }
 
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     @apply w-2.5 h-2.5;
   }
 
@@ -137,5 +137,5 @@
 
   ::-webkit-scrollbar-thumb {
     @apply rounded-full bg-border border-transparent border-solid bg-clip-padding;
-  }
+  } */
 }

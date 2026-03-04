@@ -1,31 +1,42 @@
 import { useEffect, useRef } from "react";
-import { FieldValues, UseFormReturn } from "react-hook-form";
+import { FieldValues, UseFormReturn, useWatch } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 
 export const useAutoSave = <T extends FieldValues>(
+  inventoryId: number,
   form: UseFormReturn<T>,
-  mutationFn: (variables: T) => Promise<void>,
-  delay = 800,
+  mutationFn: (variables: { inventoryId: number; data: T }) => Promise<void>,
+  delay = 1000,
 ) => {
+  const timeoutRef = useRef<number>(null);
+  const isSavingRef = useRef(false);
+
   const mutation = useMutation({
     mutationFn,
+    onMutate: () => {
+      isSavingRef.current = true;
+    },
+    onSettled: () => {
+      isSavingRef.current = false;
+    },
   });
 
-  const timeoutRef = useRef<number>(null);
-
-  const watchedValues = form.watch();
+  const formData = useWatch({ control: form.control });
 
   useEffect(() => {
-    if (!form.formState.isValid || !form.formState.isDirty) {
-      return;
-    }
-
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
 
-    timeoutRef.current = setTimeout(() => {
-      mutation.mutate(watchedValues);
+    timeoutRef.current = setTimeout(async () => {
+      const isValid = form.formState.isValid;
+
+      if (isValid && !isSavingRef.current) {
+        mutation.mutate({
+          inventoryId,
+          data: formData as T,
+        });
+      }
     }, delay);
 
     return () => {
@@ -33,5 +44,7 @@ export const useAutoSave = <T extends FieldValues>(
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [watchedValues, form.formState.isValid, form.formState.isDirty, delay]);
+  }, [inventoryId, formData, delay]);
+
+  return { isSaving: isSavingRef.current };
 };

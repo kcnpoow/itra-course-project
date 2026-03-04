@@ -3,6 +3,7 @@ import validate from "express-zod-safe";
 
 import { inventoryController } from "../controllers/inventory.controller";
 import { getInventorySchema } from "../schemas/get-inventory.schema";
+import { updateSettingsSchema } from "../schemas/update-settings";
 
 const inventoryRouter = Router();
 
@@ -13,5 +14,11 @@ inventoryRouter.get(
   inventoryController.getById,
 );
 inventoryRouter.post("/", inventoryController.create);
+
+inventoryRouter.patch(
+  "/:inventoryId/update-settings",
+  validate(updateSettingsSchema),
+  inventoryController.updateSettings,
+);
 
 export { inventoryRouter };
